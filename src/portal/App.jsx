@@ -1,4 +1,4 @@
-+ import { useAuthPortal } from './hooks/useAuthPortal'
+import { useAuthPortal } from './hooks/useAuthPortal'
 import React, { useEffect, useMemo, useState } from "react";
 const {
   loading, errorMsg, okMsg,
