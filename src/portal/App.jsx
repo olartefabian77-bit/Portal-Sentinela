@@ -1,4 +1,75 @@
+import { useAuthPortal } from './hooks/useAuthPortal' // ajusta la ruta si hace falta
 
+const {
+  loading, errorMsg, okMsg,
+  country, setCountry,
+  dealer, setDealer,
+  handleLogin, handleRegister
+} = useAuthPortal()
+// Al inicio del archivo:
+import { useState, useEffect } from 'react'
+import { supabase } from './lib/supabaseClient' // Ajusta la ruta si este archivo no está en src raíz
+
+// Dentro del componente:
+const [loading, setLoading] = useState(false)
+const [errorMsg, setErrorMsg] = useState('')
+const [okMsg, setOkMsg] = useState('')
+const [country, setCountry] = useState('Colombia')
+const [dealer, setDealer] = useState('')
+
+// (Opcional) Detectar sesión activa
+useEffect(() => {
+  supabase.auth.getUser().then(({ data }) => {
+    if (data?.user) setOkMsg(`Sesión activa: ${data.user.email}`)
+  })
+}, [])
+
+const handleLogin = async (e) => {
+  e.preventDefault()
+  setErrorMsg(''); setOkMsg(''); setLoading(true)
+  const email = e.target.email.value.trim()
+  const password = e.target.password.value
+  try {
+    const { error } = await supabase.auth.signInWithPassword({ email, password })
+    if (error) throw error
+    setOkMsg('Inicio de sesión correcto')
+    // TODO: redirigir a dashboard cuando exista
+  } catch (err) {
+    setErrorMsg(err.message)
+  } finally {
+    setLoading(false)
+  }
+}
+
+const handleRegister = async (e) => {
+  e.preventDefault()
+  setErrorMsg(''); setOkMsg(''); setLoading(true)
+  const email = e.target.regEmail.value.trim()
+  const password = e.target.regPassword.value
+  try {
+    // 1) Crear usuario
+    const { data, error } = await supabase.auth.signUp({ email, password })
+    if (error) throw error
+    const user = data.user
+    if (!user) throw new Error('No se pudo crear el usuario')
+
+    // 2) Insertar perfil (tabla profiles)
+    const { error: insertError } = await supabase.from('profiles').insert({
+      id: user.id,
+      email,
+      country,
+      dealer,
+      role: 'dealer'
+    })
+    if (insertError) throw insertError
+
+    setOkMsg('Cuenta creada. Revisa tu correo si la verificación está activada.')
+  } catch (err) {
+    setErrorMsg(err.message)
+  } finally {
+    setLoading(false)
+  }
+}
 import React, { useEffect, useMemo, useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "../components/ui/card";
 import { Button } from "../components/ui/button";
