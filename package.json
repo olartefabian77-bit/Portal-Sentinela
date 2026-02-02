@@ -1,3 +1,4 @@
+
 {
   "name": "portal-sentinela",
   "private": true,
@@ -10,22 +11,18 @@
   },
   "dependencies": {
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
-    /* ----- AQUI puedes mantener otras dependencias que ya tienes, por ejemplo:
-       "lucide-react": "^0.454.0",
-       "clsx": "^2.1.1",
-       etc. ----- */
+    "react-dom": "^18.2.0",
+    "lucide-react": "^0.454.0",
+    "clsx": "^2.1.1"
   },
   "devDependencies": {
-    "@vitejs/plugin-react": "^4.2.0",
-    "vite": "^5.0.0"
-    /* ----- Mantén también tus devDependencies actuales como:
-       "tailwindcss": "^3.4.7",
-       "postcss": "^8.4.41",
-       "autoprefixer": "^10.4.19",
-       "@types/react": "^18.3.5",
-       "@types/react-dom": "^18.3.0"
-       etc. ----- */
+    "@types/react": "^18.3.5",
+    "@types/react-dom": "^18.3.0",
+    "autoprefixer": "^10.4.19",
+    "postcss": "^8.4.41",
+    "tailwindcss": "^3.4.7",
+    "vite": "^5.0.0",
+    "@vitejs/plugin-react": "^4.2.0"
   },
   "engines": {
     "node": ">=18.17.0"
