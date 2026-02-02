@@ -1,5 +1,5 @@
-import { useAuthPortal } from './hooks/useAuthPortal' // ajusta la ruta si hace falta
-
++ import { useAuthPortal } from './hooks/useAuthPortal'
+import React, { useEffect, useMemo, useState } from "react";
 const {
   loading, errorMsg, okMsg,
   country, setCountry,
